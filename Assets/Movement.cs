@@ -52,6 +52,7 @@ public class Movement : MonoBehaviour
         floorMask = LayerMask.GetMask("Floor");
 
         // Set up references.
+        anim = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
     }
 
@@ -68,7 +69,9 @@ public class Movement : MonoBehaviour
         // Turn the player to face the mouse cursor.
         Turning();
 
-  
+        // Animate the player.
+        Animating(h, v);
+
     }
 
     void Move(float h, float v)
@@ -107,5 +110,15 @@ public class Movement : MonoBehaviour
             playerRigidbody.MoveRotation(newRotation);
         }
     }
+
+    void Animating(float h, float v)
+    {
+        // Create a boolean that is true if either of the input axes is non-zero.
+        bool running = h != 0f || v != 0f;
+
+        // Tell the animator whether or not the player is walking.
+        anim.SetBool("IsRunning", running);
+    }
+
 
 }
