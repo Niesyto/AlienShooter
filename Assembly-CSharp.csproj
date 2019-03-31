@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Movement.cs" />
+     <None Include="Assets\Yurowm\Shaders\SkinShader.shader" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/Administrator/Desktop/Alien Shooter/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
