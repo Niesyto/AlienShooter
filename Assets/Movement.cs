@@ -5,38 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
 
-    //float Speed;
-
-    //private void Start()
-    //{
-    //    //Zmienić jakby się postać poruszała za wolno, okaże się w przyszłości
-    //    Speed = 1;
-    //}
-
-
-    //// Update is called once per frame
-    //void Update()
-    //{
-
-    //    //Poruszanie się
-    //    transform.Translate(Input.GetAxis("Horizontal")*Time.deltaTime*Speed, 0, Input.GetAxis("Vertical") * Time.deltaTime*Speed);
-
-
-    //    //Obracanie się
-    //    Vector3 mousePosition = Input.mousePosition;
-    //    //mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-    //    Vector3 direction = new Vector3(
-    //       transform.position.x - mousePosition.x,
-    //       0,
-    //       transform.position.y - mousePosition.y
-    //        );
-
-
-    //    Quaternion rotation = Quaternion.LookRotation(direction);
-
-    //    transform.rotation = rotation;
-    //}
+   
 
     public float speed = 1f;            // The speed that the player will move at.
 
@@ -45,6 +14,7 @@ public class Movement : MonoBehaviour
     Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
     int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
     float camRayLength = 100f;          // The length of the ray from the camera into the scene.
+    AudioSource playerAudio;            // Reference to audio player
 
     void Awake()
     {
@@ -54,6 +24,7 @@ public class Movement : MonoBehaviour
         // Set up references.
         anim = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
+        playerAudio = GetComponent<AudioSource>();
     }
 
 
@@ -72,6 +43,9 @@ public class Movement : MonoBehaviour
         // Animate the player.
         Animating(h, v);
 
+        // Playing the sound
+        PlayFootsteps();
+
     }
 
     void Move(float h, float v)
@@ -84,6 +58,8 @@ public class Movement : MonoBehaviour
 
         // Move the player to it's current position plus the movement.
         playerRigidbody.MovePosition(transform.position + movement);
+
+
     }
 
     void Turning()
@@ -118,7 +94,24 @@ public class Movement : MonoBehaviour
 
         // Tell the animator whether or not the player is walking.
         anim.SetBool("IsRunning", running);
+
+
     }
 
+    void PlayFootsteps()
+    {
+        if(anim.GetBool("IsRunning")==true)
+        {
+            // Play the movement sound
+            playerAudio.pitch = (Random.Range(0.5f, 1.5f));
+            playerAudio.enabled = true;
+            playerAudio.loop = true;
+        }
+        if (anim.GetBool("IsRunning") == false)
+        {
+            playerAudio.enabled = false;
+            playerAudio.loop = false;
+        }
+    }
 
 }
