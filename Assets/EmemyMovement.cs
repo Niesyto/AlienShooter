@@ -49,11 +49,6 @@ public class EmemyMovement : MonoBehaviour
         }
 
         Move(h, v);
-
-        //// Turn the player to face the mouse cursor.
-        //Turning();
-
-        // Animate the player.
         Animating(h, v);
 
     }
