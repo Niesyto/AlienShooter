@@ -27,8 +27,8 @@ public class EmemyMovement : MonoBehaviour
     void FixedUpdate()
     {
         // Store the input axes.
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+       float h = 0.0f;
+    float v = 0.0f;
         
         if (wayBool)
         {
