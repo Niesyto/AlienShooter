@@ -7,10 +7,12 @@ public class EmemyMovement : MonoBehaviour
 
     public float speed = 1f;            // The speed that the player will move at.
     public float lenth = 20;
+	public float xPar = 0.05f;
+	public float zPar = 0.05f;
     float pathLenth;
     bool wayBool = true;
     Vector3 movement;                   // The vector to store the direction of the player's movement.
-    Animation anim;                      // Reference to the animator component.
+    Animator anim;                      // Reference to the animator component.
     Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
     int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
     float camRayLength = 100f;          // The length of the ray from the camera into the scene.
@@ -19,24 +21,27 @@ public class EmemyMovement : MonoBehaviour
     {
         // Set up references.
         pathLenth = lenth;
-        anim = GetComponent<Animation>();
         playerRigidbody = GetComponent<Rigidbody>();
+ 	anim = GetComponent<Animator>();
+	anim.SetInteger("State", 1);
     }
 
 
     void FixedUpdate()
     {
         // Store the input axes.
-       float h = 0.0f;
-    float v = 0.0f;
+       	float x = 0.0f;
+    	float z = 0.0f;
         
         if (wayBool)
         {
-            v += 0.1f;
+            z += zPar;
+		x += xPar;
         }
         else
         {
-            v -= 0.1f;
+            z -= zPar;
+		x -= xPar;
         }
 
         pathLenth -= 0.1f;
@@ -48,9 +53,7 @@ public class EmemyMovement : MonoBehaviour
             Turning();
         }
 
-        Move(h, v);
-        Animating(h, v);
-
+        Move(x, z);
     }
 
     void Move(float h, float v)
@@ -68,10 +71,5 @@ public class EmemyMovement : MonoBehaviour
     void Turning()
     {
         playerRigidbody.rotation *= Quaternion.Euler(0, 180f, 0);
-    }
-
-    void Animating(float h, float v)
-    {
-        anim.Play("Walk");
     }
 }
