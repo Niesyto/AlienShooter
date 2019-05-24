@@ -95,6 +95,10 @@ public class Movement : MonoBehaviour
         // Tell the animator whether or not the player is walking.
         anim.SetBool("IsRunning", running);
 
+        if(Input.GetButton ("Fire1"))
+            anim.SetBool("IsShooting",true);
+        else
+            anim.SetBool("IsShooting",false);
 
     }
 
