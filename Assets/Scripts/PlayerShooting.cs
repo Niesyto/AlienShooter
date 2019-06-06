@@ -14,7 +14,8 @@ public class PlayerShooting : MonoBehaviour
     AudioSource gunAudio;                           // Reference to the audio source.
     Light gunLight;                                 // Reference to the light component.
     float effectsDisplayTime = 0.2f;                // The proportion of the timeBetweenBullets that the effects will display for.
-
+    ParticleSystem gunParticles;                    // Reference to the particle renderer
+   
     void Awake ()
     {
         // Create a layer mask for the Shootable layer.
@@ -23,10 +24,15 @@ public class PlayerShooting : MonoBehaviour
         gunLine = GetComponent <LineRenderer> ();
         gunAudio = GetComponent<AudioSource> ();
         gunLight = GetComponent<Light> ();
+        gunParticles = GetComponentInChildren<ParticleSystem> ();
+       
+        
     }
 
     void Update ()
     {
+        
+      
         // Add the time since Update was last called to the timer.
         timer += Time.deltaTime;
 
@@ -52,6 +58,9 @@ public class PlayerShooting : MonoBehaviour
         // Disable the line renderer and the light.
         gunLine.enabled = false;
         gunLight.enabled = false;
+ 
+   
+        
     }
 
     void Shoot ()
@@ -64,7 +73,9 @@ public class PlayerShooting : MonoBehaviour
 
         // Enable the light.
         gunLight.enabled = true;
-
+        gunLine.enabled = true;
+        gunParticles.Play();
+       
     }
 }
 
