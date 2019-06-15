@@ -85,6 +85,8 @@ public class PlayerShooting : MonoBehaviour
         shootRay.origin = transform.position;
         shootRay.direction = transform.forward;
 
+        var hitDirection = transform.rotation.eulerAngles;
+
         // Perform the raycast against gameobjects on the shootable layer and if it hits something...
         if(Physics.Raycast (shootRay, out shootHit, range, shootableMask))
         {
@@ -95,7 +97,7 @@ public class PlayerShooting : MonoBehaviour
             if(enemyHealth != null)
             {
                 // ... the enemy should take damage.
-                enemyHealth.TakeDamage (damagePerShot, shootHit.point);
+                enemyHealth.TakeDamage (damagePerShot, hitDirection);
             }
 
             // Set the second position of the line renderer to the point the raycast hit.

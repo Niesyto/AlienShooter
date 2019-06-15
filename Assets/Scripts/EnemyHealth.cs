@@ -7,11 +7,15 @@ public class EnemyHealth : MonoBehaviour
     public int startingHealth = 100;            // The amount of health the enemy starts the game with.
     public int currentHealth;                   // The current health the enemy has.
     public int scoreValue = 10;                 // The amount added to the player's score when the enemy dies.
+    public AudioClip zombieDeath;
 
     Animator anim;                              // Reference to the animator.
     CapsuleCollider capsuleCollider;            // Reference to the capsule collider.
     bool isDead;                                // Whether the enemy is dead.
-    EmemyMovement enemyMovement;
+    EmemyMovement enemyMovement;                // Reference to enemy movement module
+    ParticleSystem bloodParticles;              // Reference to the particle renderer
+    AudioSource zombieAudio;                    // Reference to the audio source.
+    
 
     void Awake ()
     {
@@ -20,7 +24,12 @@ public class EnemyHealth : MonoBehaviour
        
         enemyMovement= GetComponent <EmemyMovement> ();
 
+        bloodParticles = GetComponent<ParticleSystem> ();
+
+        zombieAudio = GetComponent<AudioSource>();
+
         capsuleCollider = GetComponent <CapsuleCollider> ();
+
 
         // Setting the current health when the enemy first spawns.
         currentHealth = startingHealth;
@@ -28,7 +37,7 @@ public class EnemyHealth : MonoBehaviour
 
     void Update ()
     {
-       
+      
     }
 
 
@@ -41,14 +50,23 @@ public class EnemyHealth : MonoBehaviour
 
         // Reduce the current health by the amount of damage sustained.
         currentHealth -= amount;
-            
+        //bloodParticles.Shape.rotation = hitPoint;
+        var particleShape= bloodParticles.shape;                 // Reference to the shape of particle system
 
+
+        particleShape.rotation=gameObject.transform.eulerAngles+hitPoint;
+        bloodParticles.Play();    
+
+        
         // If the current health is less than or equal to zero...
         if(currentHealth <= 0)
         {
             // ... the enemy is dead.
             Death ();
         }
+        zombieAudio.Play();
+        
+
     }
 
 
@@ -64,6 +82,7 @@ public class EnemyHealth : MonoBehaviour
         anim.SetTrigger ("Dead");
 
         enemyMovement.enabled=false;
+        zombieAudio.clip = zombieDeath;
 
     }
 
