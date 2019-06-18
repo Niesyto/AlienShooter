@@ -15,13 +15,16 @@ public class EnemyHealth : MonoBehaviour
     EmemyMovement enemyMovement;                // Reference to enemy movement module
     ParticleSystem bloodParticles;              // Reference to the particle renderer
     AudioSource zombieAudio;                    // Reference to the audio source.
-    
+    UnityEngine.AI.NavMeshAgent nav;   
 
     void Awake ()
     {
         // Setting up the references.
         anim = GetComponent <Animator> ();
        
+        nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
+
+
         enemyMovement= GetComponent <EmemyMovement> ();
 
         bloodParticles = GetComponent<ParticleSystem> ();
@@ -82,6 +85,7 @@ public class EnemyHealth : MonoBehaviour
         anim.SetTrigger ("Dead");
 
         enemyMovement.enabled=false;
+        nav.enabled = false;
         zombieAudio.clip = zombieDeath;
 
     }

@@ -5,85 +5,42 @@ using UnityEngine;
 public class EmemyMovement : MonoBehaviour
 {
 
-    public float speed = 0.5f;            // The speed that the enemy will move at.
-    public float lenth = 20;
-	public float xPar = 0.05f;
-	public float zPar = 0.05f;
-    float pathLenth;
-    bool wayBool = true;
-    Vector3 movement;                   // The vector to store the direction of the enemy's movement.
     Animator anim;                      // Reference to the animator component.
     Rigidbody playerRigidbody;          // Reference to the enemy's rigidbody.
+    Transform player;               // Reference to the player's position.
+    PlayerHealth playerHealth;      // Reference to the player's health.
+    EnemyHealth enemyHealth;        // Reference to this enemy's health.
+    UnityEngine.AI.NavMeshAgent nav;               // Reference to the nav mesh agent.
+
 
     void Awake()
     {
         // Set up references.
-        pathLenth = lenth;
         playerRigidbody = GetComponent<Rigidbody>();
  	    anim = GetComponent<Animator>();
+
+        player = GameObject.FindGameObjectWithTag ("Player").transform;
+        playerHealth = player.GetComponent <PlayerHealth> ();
+        enemyHealth = GetComponent <EnemyHealth> ();
+        nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
 	   
     }
 
-
-    void FixedUpdate()
+    void Update ()
     {
-        // Store the input axes.
-       	float x = 0.0f;
-    	float z = 0.0f;
-        
-        if (wayBool)
+        // If the enemy and the player have health left...
+        if(playerHealth.currentHealth > 0 && enemyHealth.currentHealth>=0)
         {
-            z += zPar;
-		x += xPar;
+            anim.SetBool("isWalking", true);
+            // ... set the destination of the nav mesh agent to the player.
+            nav.SetDestination (player.position);
         }
+        // Otherwise...
         else
         {
-            z -= zPar;
-		x -= xPar;
+            // ... disable the nav mesh agent.
+            nav.enabled = false;
         }
-
-        pathLenth -= 0.1f;
-
-        if (pathLenth <= 0)
-        {
-            pathLenth = lenth;
-            wayBool = !wayBool;
-            Turning();
-        }
-
-        Move(x, z);
-
-        
-    }
-
-    void Move(float h, float v)
-    {
-        // Set the movement vector based on the axis input.
-        movement.Set(h, 0f, v);
-
-        // Normalise the movement vector and make it proportional to the speed per second.
-        movement = movement.normalized * speed * Time.deltaTime;
-
-        // Move the player to it's current position plus the movement.
-        playerRigidbody.MovePosition(transform.position + movement);
-
-        Animating(h,v);
-    }
-
-    void Turning()
-    {
-        playerRigidbody.rotation *= Quaternion.Euler(0, 180f, 0);
-    }
-
-
-    void Animating(float h, float v)
-    {
-        // Create a boolean that is true if either of the input axes is non-zero.
-        bool walking = h != 0f || v != 0f;
-
-        // Tell the animator whether or not the player is walking.
-        anim.SetBool("isWalking", walking);
-
-    }
-
+    } 
+  
 }
