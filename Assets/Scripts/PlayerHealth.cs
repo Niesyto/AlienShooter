@@ -27,10 +27,21 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
+    void Update ()
+    {
+       anim.ResetTrigger("Damage");
+    }
+
+
     public void TakeDamage (int amount)
     {
+
+        // Tell the animator the player got damaged
+        anim.SetTrigger ("Damage");
+
         // Reduce the current health by the damage amount.
         currentHealth -= amount;
+
 
         // Play the hurt sound effect.
         playerAudio.Play ();
@@ -49,12 +60,13 @@ public class PlayerHealth : MonoBehaviour
         // Set the death flag so this function won't be called again.
         isDead = true;
 
+       
+
         // Tell the animator that the player is dead.
         anim.SetTrigger ("Death");
 
         // Set the audiosource to play the death clip and play it (this will stop the hurt sound from playing).
         playerAudio.clip = deathClip;
-        playerAudio.loop = false;
         playerAudio.Play ();
 
         // Turn off the movement and shooting scripts.
