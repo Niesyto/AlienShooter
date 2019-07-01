@@ -63,8 +63,9 @@ public class PlayerShooting : MonoBehaviour
         
     }
 
-    void Shoot ()
+    public void Shoot ()
     {
+       
         // Reset the timer.
         timer = 0f;
 
@@ -110,8 +111,6 @@ public class PlayerShooting : MonoBehaviour
             gunLine.SetPosition (1, shootRay.origin + shootRay.direction * range);
         }
 
-
-       
     }
 }
 

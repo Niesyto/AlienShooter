@@ -88,11 +88,12 @@ public class EnemyHealth : MonoBehaviour
         nav.enabled = false;
         zombieAudio.clip = zombieDeath;
         
+        
+
+
+        
         ScoreManager.score += scoreValue;
-
-
         Destroy (gameObject, 2f);
-
     }
 
 }
