@@ -8,6 +8,8 @@ public class SideSlidingDoorScript : MonoBehaviour
     public GameObject leftWing;
     public GameObject rightWing;
 
+    float timer;
+
     Animator leftAnimator;
     Animator rightAnimator;
     // Start is called before the first frame update
@@ -21,21 +23,16 @@ public class SideSlidingDoorScript : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Enemy")
         {
+            timer = 0f;
             SlideDoors(true);
         }
     }
 
-    private void OnTriggerExit(Collider collider)
-    {
-        if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Enemy")
-        {
-            SlideDoors(false);
-        }
-
-    }
+   
 
     void SlideDoors(bool open)
     {
+         
         leftAnimator.SetBool("slide", open);
         rightAnimator.SetBool("slide", open);
     }
@@ -43,6 +40,11 @@ public class SideSlidingDoorScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+         timer += Time.deltaTime;
+         if(timer>=2f)
+         {
+            SlideDoors(false);
+            timer = 0f;
+         }
     }
 }

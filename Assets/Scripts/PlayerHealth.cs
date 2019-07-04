@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour
     AudioSource playerAudio;                                    // Reference to the AudioSource component.
     Movement playerMovement;                                    // Reference to the player's movement.
     PlayerShooting playerShooting;                              // Reference to the shooting component
+    public SpawnManager spawnManager;                                  // Reference to the zombie spawn manager
     bool isDead;                                                // Whether the player is dead.
     bool damaged;                                               // True when the player gets damaged.
 
@@ -75,6 +76,8 @@ public class PlayerHealth : MonoBehaviour
         playerMovement.enabled = false;
         playerShooting.enabled = false;
         playerAudio.loop = false;
+
+        spawnManager.ResetZombies();
     }        
 
     

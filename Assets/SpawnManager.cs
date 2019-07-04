@@ -7,21 +7,39 @@ public class SpawnManager : MonoBehaviour
     public GameObject enemy;                // The enemy prefab to be spawned.
     public float spawnTime = 4f;            // How long between each spawn.
     public Transform[] spawnPoints;         // An array of the spawn points this enemy can spawn from.
-
+    EnemyHealth enemyHealth;                // Reference to zombie's health
+    EnemyAttack enemyAttack;                // Reference to zombie's attack
+    int scoreDivider;                       // Variable used for dividing score to scale enemies
 
     void Start ()
     {
         // Call the Spawn function
         StartCoroutine(Spawn(spawnTime) ) ;
 
+        scoreDivider = 100;
+
+        enemyHealth = enemy.GetComponent <EnemyHealth> ();
+        enemyAttack = enemy.GetComponent <EnemyAttack> ();
     }
 
     void Update ()
     {
         // Modify spawn rate according to player's score
-        spawnTime=4f - (ScoreManager.score/100);
+        spawnTime=4f - (ScoreManager.score/scoreDivider);
         if(spawnTime<=0f)
-            spawnTime=0.1f;
+            {
+            // Upgrade enemies after reaching certain score
+            spawnTime=4f;
+            scoreDivider=scoreDivider*2;
+            enemyHealth.scoreValue=enemyHealth.scoreValue*2;
+
+            int randomEnemyUpgrade = Random.Range (0, 2);
+
+            if(randomEnemyUpgrade==0)
+                enemyHealth.startingHealth=(int)(enemyHealth.startingHealth*1.5);
+            else
+                enemyAttack.attackDamage=(int)(enemyAttack.attackDamage*1.5);
+            }
     }
 
      IEnumerator Spawn( float time )
@@ -42,5 +60,12 @@ public class SpawnManager : MonoBehaviour
             Instantiate (enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
             yield return new WaitForSeconds(spawnTime) ;
         }
+    }
+
+    public void ResetZombies()
+    {
+        enemyHealth.startingHealth=100;
+        enemyAttack.attackDamage=10;
+        enemyHealth.scoreValue=10;
     }
 }

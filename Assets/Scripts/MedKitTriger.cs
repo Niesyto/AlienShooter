@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class MedKitTriger : MonoBehaviour
 {
-    public GameObject medkit;
-    Transform player;               // Reference to the player's heath.
-    PlayerHealth playerHealth;
+    Transform player;               
+    PlayerHealth playerHealth;  // Reference to the player's heath.
 
     // Start is called before the first frame update
     void Start()
@@ -20,15 +19,16 @@ public class MedKitTriger : MonoBehaviour
     {
         
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag=="Player")
         {
             double healValue=playerHealth.startingHealth *0.2;
-            playerHealth.currentHealth +=System.Convert.ToInt32(System.Math.Floor(healValue));
+            playerHealth.currentHealth +=(int)healValue;
             if(playerHealth.currentHealth>playerHealth.startingHealth)
                 playerHealth.currentHealth=playerHealth.startingHealth;
-            Destroy(medkit);
+            Destroy(transform.parent.gameObject);
         }
     }
 }
