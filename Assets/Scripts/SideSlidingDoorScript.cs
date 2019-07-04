@@ -19,7 +19,7 @@ public class SideSlidingDoorScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Enemy")
         {
             SlideDoors(true);
         }
@@ -27,7 +27,7 @@ public class SideSlidingDoorScript : MonoBehaviour
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Enemy")
         {
             SlideDoors(false);
         }

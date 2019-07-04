@@ -40,6 +40,7 @@ public class EmemyMovement : MonoBehaviour
         {
             // ... disable the nav mesh agent.
             nav.enabled = false;
+            enabled=false;
         }
     } 
   

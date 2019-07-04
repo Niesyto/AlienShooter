@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\SelectOnInput.cs" />
      <Compile Include="Assets\Scripts\SideSlidingDoorScript.cs" />
+     <Compile Include="Assets\SpawnManager.cs" />
      <Compile Include="Assets\StartMenu\Scripts\ActiveStateToggler.cs" />
      <Compile Include="Assets\StartMenu\Scripts\ApplicationManager.cs" />
      <Compile Include="Assets\StartMenu\Scripts\ChangeColor.cs" />
