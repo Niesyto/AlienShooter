@@ -2,20 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/** @brief Movement of the MedKit  */
 public class MedkitMovement : MonoBehaviour
 {
+    /** Time counter  */
     float timer;
+    /** Amplitude of the vertical movement of the box  */
     float amplitude = 0.2f;
+    /** Step of the movement  */
     public float step;
+    /** Counter of movement steps  */
     float stepCounter;
+    /** Rotation step  */
     public float rotationStep;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+  
 
-    // Update is called once per frame
+    /** @brief Update the object position and rotation  */
     void Update()
     {
 

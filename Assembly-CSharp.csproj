@@ -53,13 +53,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\MedKitSpawnManager.cs" />
      <Compile Include="Assets\Scripts\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\EmemyMovement.cs" />
      <Compile Include="Assets\Scripts\EnemyAttack.cs" />
      <Compile Include="Assets\Scripts\EnemyHealth.cs" />
      <Compile Include="Assets\Scripts\LightSwitchScript.cs" />
      <Compile Include="Assets\Scripts\LoadSceneOnClick.cs" />
+     <Compile Include="Assets\Scripts\MedKitSpawnManager.cs" />
      <Compile Include="Assets\Scripts\MedKitTriger.cs" />
      <Compile Include="Assets\Scripts\MedkitMovement.cs" />
      <Compile Include="Assets\Scripts\Movement.cs" />
@@ -70,7 +70,7 @@
      <Compile Include="Assets\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\SelectOnInput.cs" />
      <Compile Include="Assets\Scripts\SideSlidingDoorScript.cs" />
-     <Compile Include="Assets\SpawnManager.cs" />
+     <Compile Include="Assets\Scripts\SpawnManager.cs" />
      <Compile Include="Assets\StartMenu\Scripts\ActiveStateToggler.cs" />
      <Compile Include="Assets\StartMenu\Scripts\ApplicationManager.cs" />
      <Compile Include="Assets\StartMenu\Scripts\ChangeColor.cs" />

@@ -2,21 +2,32 @@
 using UnityEngine.UI;
 using System.Collections;
 
+/** @brief Class responsible for handling player's health, damage taking and dying */
 public class PlayerHealth : MonoBehaviour
 {
-    public int startingHealth = 100;                            // The amount of health the player starts the game with.
-    public int currentHealth;                                   // The current health the player has.
-    public AudioClip deathClip;                                 // The audio clip to play when the player dies.
+    /** The amount of health the player starts the game with. */
+    public int startingHealth = 100;                           
+    /** The current health the player has. */
+    public int currentHealth;                                  
+    /** The audio clip to play when the player dies. */
+    public AudioClip deathClip;                                 
+    /** Reference to the Animator component. */
+    Animator anim;                                             
+    /** Reference to the AudioSource component. */
+    AudioSource playerAudio;                                    
+    /** Reference to the player's movement. */
+    Movement playerMovement;                                  
+    /** Reference to the shooting component */
+    PlayerShooting playerShooting;                             
+    /** Reference to the zombie spawn manager */
+    public SpawnManager spawnManager;                                  
+    /** True when the player is dead. */
+    bool isDead;                                                
+    /** True when the player gets damaged. */
+    bool damaged;                                              
 
-    Animator anim;                                              // Reference to the Animator component.
-    AudioSource playerAudio;                                    // Reference to the AudioSource component.
-    Movement playerMovement;                                    // Reference to the player's movement.
-    PlayerShooting playerShooting;                              // Reference to the shooting component
-    public SpawnManager spawnManager;                                  // Reference to the zombie spawn manager
-    bool isDead;                                                // Whether the player is dead.
-    bool damaged;                                               // True when the player gets damaged.
 
-
+    /** @brief Setting up references */
     void Awake ()
     {
         // Setting up the references.
@@ -29,13 +40,14 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = startingHealth;
     }
 
-
+    /** @brief Reset the damage trigger */
     void Update ()
     {
        anim.ResetTrigger("Damage");
     }
 
-
+    /** @brief Take some damage
+    @param amount Amount of damage taken */
     public void TakeDamage (int amount)
     {
 
@@ -57,7 +69,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-
+    /** @brief Handling of player's death */
     void Death ()
     {
         // Set the death flag so this function won't be called again.

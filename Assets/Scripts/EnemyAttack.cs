@@ -1,31 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
+/** @brief Attack the player. */
 public class EnemyAttack : MonoBehaviour
 {
-    public float timeBetweenAttacks = 1.0f;     // The time in seconds between each attack.
-    public int attackDamage = 10;               // The amount of health taken away per attack.
+    /** The time in seconds between each attack. */
+    public float timeBetweenAttacks = 1.0f;     
+    /** The amount of health taken away per attack. */
+    public int attackDamage = 10;             
 
+    /** Reference to the animator component. */
+    Animator anim;                              
+    /** Reference to the player GameObject. */
+    GameObject player;                          
+    /** Reference to the player's health. */
+    PlayerHealth playerHealth;                 
+    /** Reference to this enemy's health. */
+    EnemyHealth enemyHealth;                   
+    /** Whether player is within the trigger collider and can be attacked. */
+    bool playerInRange;                        
+    /** Timer for counting up to the next attack. */
+    float timer;                               
 
-    Animator anim;                              // Reference to the animator component.
-    GameObject player;                          // Reference to the player GameObject.
-    PlayerHealth playerHealth;                  // Reference to the player's health.
-    EnemyHealth enemyHealth;                    // Reference to this enemy's health.
-    bool playerInRange;                         // Whether player is within the trigger collider and can be attacked.
-    float timer;                                // Timer for counting up to the next attack.
-
-
+    /** @brief Setting up the references. */
     void Awake ()
     {
-        // Setting up the references.
+       
         player = GameObject.FindGameObjectWithTag ("Player");
         playerHealth = player.GetComponent <PlayerHealth> ();
         enemyHealth = GetComponent<EnemyHealth>();
         anim = GetComponent <Animator> ();
     }
 
-
+    /** @brief Check what's entering the collider
+    @param other Object interacting with this enemy collider
+     */
     void OnTriggerEnter (Collider other)
     {
         // If the entering collider is the player...
@@ -36,7 +45,9 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-
+    /** @brief Check what's leaving the collider
+    @param other Object interacting with this enemy collider
+     */
     void OnTriggerExit (Collider other)
     {
         // If the exiting collider is the player...
@@ -47,7 +58,7 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-
+    /** @brief Check if attacking is possible */
     void Update ()
     {
         // Add the time since Update was last called to the timer.
@@ -64,18 +75,13 @@ public class EnemyAttack : MonoBehaviour
         {
             anim.ResetTrigger("isAttacking");
         }
-
-
-
     }
 
-
+    /** @brief Deal damage to the player */
     void Attack ()
     {
         // Reset the timer.
         timer = 0f;
-
-
 
         // If the player has health to lose...
         if(playerHealth.currentHealth > 0)

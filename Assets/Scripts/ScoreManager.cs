@@ -2,22 +2,35 @@
 using UnityEngine.UI;
 using System.Collections;
 
+/** @brief Managing the player's score */
 public class ScoreManager : MonoBehaviour
 {
-    public static int score;        // The player's score.
-    public int scoreRequired;       // Score required do level up
-    GameObject levelUpCanvas;       // Reference to Leveling up canvas
-    GameObject hUDCanvas;           // Reference to HUD canvas
-    GameObject player;              // Reference to the player
-    GameObject enemies;             // Reference to the enemies container
-    Text text;                      // Reference to the Text component.
-    GameObject[] enemiesArray;       // Array of enemies
+    /** The player's score. */
+    public static int score;       
+    /** Score required do level up */
+    public int scoreRequired;      
+    /** Reference to Leveling up canvas */
+    GameObject levelUpCanvas;      
+    /** Reference to HUD canvas */
+    GameObject hUDCanvas;          
+    /** Reference to the player */
+    GameObject player;             
+    /** Reference to the enemies container */
+    GameObject enemies;            
+    /** Reference to the Text component. */
+    Text text;                     
+    /** Array of enemies */
+    GameObject[] enemiesArray;      
+    /** Reference to the player's position. */
+    Transform playerTransform;      
+    /** Reference to the player's health. */
+    PlayerHealth playerHealth;      
+    /** Reference to the player's movement. */
+    Movement playerMovement;       
+    /** Reference to the player's shooting script. */
+    PlayerShooting playerShooting;   
 
-    Transform playerTransform;      // Reference to the player's position.
-    PlayerHealth playerHealth;      // Reference to the player's health.
-    Movement playerMovement;        // Reference to the player's movement.
-    PlayerShooting playerShooting;   // Reference to the player's shooting script.
-
+    /** @brief Set up the references and starting score */
     void Awake ()
     {
         // Set up the reference.
@@ -39,7 +52,7 @@ public class ScoreManager : MonoBehaviour
     
     }
 
-
+    /** @brief Set the displayed text to the current score and run a CheckLevel() */
     void Update ()
     {
         // Set the displayed text to be the word "Score" followed by the score value.
@@ -48,69 +61,56 @@ public class ScoreManager : MonoBehaviour
         CheckLevel();
     }
 
+    /** @brief Check if the player has leveled up */
     void CheckLevel()
     {
         if(score>=scoreRequired)
         {
             scoreRequired*=(int)2.5;
-            PauseGame();
+            ShowLevelUpCanvas();
         }
     }
 
-
-    void PauseGame()
+    /** @brief Display level up canvas */
+    void ShowLevelUpCanvas()
     {
-        /* 
-        enemiesArray = GameObject.FindGameObjectsWithTag("Enemy");
- 
-        foreach(GameObject go in enemiesArray)
-        {
-            go.SetActive(false);
-        }
-        */
-
-
         hUDCanvas.SetActive(false);
-        levelUpCanvas.SetActive(true);
-        //player.SetActive(false);
+        levelUpCanvas.SetActive(true);   
     }
 
-    void UnpauseGame()
+    /** @brief Hide level up canvas */
+    void HideLevelUpCanvas()
     {
-        
-        /* 
-        foreach(GameObject go in enemiesArray)
-        {
-            go.SetActive(true);
-        }
-        */
         hUDCanvas.SetActive(true);
         levelUpCanvas.SetActive(false);
-        //player.SetActive(true);
     }
 
+    /** @brief Increase player's maximum health*/
     public void IncreaseMaxHealth()
     {
         playerHealth.startingHealth=(int)(playerHealth.startingHealth*1.5);
         playerHealth.currentHealth=(int)(playerHealth.currentHealth*1.5);
-        UnpauseGame();
+        HideLevelUpCanvas();
     }
 
+    /** @brief Increase player's fire rate */
     public void IncreaseFireRate()
     {
         playerShooting.timeBetweenBullets*=0.9f;
-        UnpauseGame();
+        HideLevelUpCanvas();
     }
 
+    /** @brief Increase player's damage*/
     public void IncreaseDamage()
     {
         playerShooting.damagePerShot=(int)(playerShooting.damagePerShot*1.5f);
-        UnpauseGame();
+        HideLevelUpCanvas();
     }
 
+    /** @brief Increase player's movement speed*/
     public void IncreaseMoveSpeed()
     {
         playerMovement.speed*=1.1f;
-        UnpauseGame();
+        HideLevelUpCanvas();
     }
 }

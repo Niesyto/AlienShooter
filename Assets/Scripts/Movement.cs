@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/** @brief Player movement script */
 public class Movement : MonoBehaviour
 {
+    /** The speed that the player will move at. */
+    public float speed = 1f;          
+    /** The vector to store the direction of the player's movement. */
+    Vector3 movement;                 
+    /** Reference to the animator component. */
+    Animator anim;                     
+    /** Reference to the player's rigidbody. */
+    Rigidbody playerRigidbody;         
+    /** A layer mask so that a ray can be cast just at gameobjects on the floor layer. */
+    int floorMask;                     
+    /** The length of the ray from the camera into the scene. */
+    float camRayLength = 100f;         
+    /** Reference to audio player */
+    AudioSource playerAudio;          
 
-   
-
-    public float speed = 1f;            // The speed that the player will move at.
-
-    Vector3 movement;                   // The vector to store the direction of the player's movement.
-    Animator anim;                      // Reference to the animator component.
-    Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
-    int floorMask;                      // A layer mask so that a ray can be cast just at gameobjects on the floor layer.
-    float camRayLength = 100f;          // The length of the ray from the camera into the scene.
-    AudioSource playerAudio;            // Reference to audio player
-
+    /** @brief Set up references */
     void Awake()
     {
         // Create a layer mask for the floor layer.
@@ -27,7 +32,7 @@ public class Movement : MonoBehaviour
         playerAudio = GetComponent<AudioSource>();
     }
 
-
+    /** @brief Update player movement, rotation and animation */
     void FixedUpdate()
     {
         // Store the input axes.
@@ -48,6 +53,10 @@ public class Movement : MonoBehaviour
 
     }
 
+    /** @brief Change the player's position
+    @param h Horizontal position offset
+    @param v Vertical possition offset
+     */
     void Move(float h, float v)
     {
         // Set the movement vector based on the axis input.
@@ -62,6 +71,7 @@ public class Movement : MonoBehaviour
 
     }
 
+    /** @brief Turn the player to the mouse position */
     void Turning()
     {
         // Create a ray from the mouse cursor on screen in the direction of the camera.
@@ -87,6 +97,10 @@ public class Movement : MonoBehaviour
         }
     }
 
+    /** @brief Check if the player is moving and animate it
+    @param h Horizontal position offset
+    @param v Vertical possition offset
+     */
     void Animating(float h, float v)
     {
         // Create a boolean that is true if either of the input axes is non-zero.
@@ -102,6 +116,7 @@ public class Movement : MonoBehaviour
 
     }
 
+    /** @brief Play footstep sounds */
     void PlayFootsteps()
     {
         if(anim.GetBool("IsRunning")==true)

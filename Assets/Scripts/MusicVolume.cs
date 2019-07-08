@@ -2,27 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/** @brief Music volume change script */
 public class MusicVolume : MonoBehaviour
 {
-    // Reference to Audio Source component
+    /**  Reference to Audio Source component */
     private AudioSource audioSrc;
 
-    // Music volume variable that will be modified
-    // by dragging slider knob
+    /** Music volume variable that will be modified by dragging slider knob  */
     private float musicVolume = 1f;
 
-    // Use this for initialization
+    /** @brief Set up references */
     void Start()
     {
-
         // Assign Audio Source component to control it
         audioSrc = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
+   /** @brief Update the setting volume */
     void Update()
     {
-
         // Setting volume option of Audio Source to be equal to musicVolume
         audioSrc.volume = musicVolume;
     }
@@ -30,6 +28,8 @@ public class MusicVolume : MonoBehaviour
     // Method that is called by slider game object
     // This method takes vol value passed by slider
     // and sets it as musicValue
+    /** @brief Change volume according to the slider position
+    @param vol Value returned by slider */
     public void SetVolume(float vol)
     {
         musicVolume = vol;

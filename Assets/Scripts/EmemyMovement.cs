@@ -2,20 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/** @brief Calculating the movement of an enemy */
 public class EmemyMovement : MonoBehaviour
 {
+    /** Reference to the animator component. */
+    Animator anim;                     
+    /** Reference to the enemy's rigidbody. */
+    Rigidbody playerRigidbody;         
+    /** Reference to the player's position. */
+    Transform player;              
+    /** Reference to the player's health. */
+    PlayerHealth playerHealth;     
+    /** Reference to this enemy's health. */
+    EnemyHealth enemyHealth;       
+    /** Reference to the nav mesh agent. */
+    UnityEngine.AI.NavMeshAgent nav;             
 
-    Animator anim;                      // Reference to the animator component.
-    Rigidbody playerRigidbody;          // Reference to the enemy's rigidbody.
-    Transform player;               // Reference to the player's position.
-    PlayerHealth playerHealth;      // Reference to the player's health.
-    EnemyHealth enemyHealth;        // Reference to this enemy's health.
-    UnityEngine.AI.NavMeshAgent nav;               // Reference to the nav mesh agent.
 
-
+    /** @brief Set up references. */
     void Awake()
     {
-        // Set up references.
+
         playerRigidbody = GetComponent<Rigidbody>();
  	    anim = GetComponent<Animator>();
 
@@ -25,7 +32,8 @@ public class EmemyMovement : MonoBehaviour
         nav = GetComponent <UnityEngine.AI.NavMeshAgent> ();
 	   
     }
-
+    
+    /** @brief Update nav mesh destination. */
     void Update ()
     {
         // If the enemy and the player have health left...

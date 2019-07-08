@@ -2,20 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+ /** @brief Operating the lights  */
 public class LightSwitchScript : MonoBehaviour
 {
+    /** Reference to the trigger  */
     public GameObject trigger;
+    /** Lights being turned on by the button  */
     public GameObject lights;
-
+    /** Time counter  */
     float timer;
+    /** Delay betweer each use of the button  */
     float switchDelay = 0.5f;
+    /** Variable deciding whether the lights are on or off  */
     bool switchOn = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
+    /** @brief Turn on the light 
+    @param other Object inside the collider
+      */
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player" && Input.GetKey(KeyCode.E) && timer >= switchDelay) 
@@ -31,7 +34,7 @@ public class LightSwitchScript : MonoBehaviour
     }
 
 
-    // Update is called once per frame
+    /** @brief Update the timer  */
     void Update()
     {
         timer += Time.deltaTime;

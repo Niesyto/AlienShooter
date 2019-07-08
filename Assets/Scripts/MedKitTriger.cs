@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/** @brief MedKit trigger handling */
 public class MedKitTriger : MonoBehaviour
 {
-    Transform player;               
-    PlayerHealth playerHealth;  // Reference to the player's heath.
+    /** Reference to the player */
+    Transform player;   
+    /** Reference to the player's health. */            
+    PlayerHealth playerHealth; 
 
-    // Start is called before the first frame update
+    /** @brief Set up references */         
     void Start()
     {
          player = GameObject.FindGameObjectWithTag ("Player").transform;
          playerHealth = player.GetComponent <PlayerHealth> ();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+   
+    /** @brief Heal the player on entering the trigger zone
+    @param other Object entering the collider
+     */
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag=="Player")

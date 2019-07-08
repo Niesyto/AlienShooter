@@ -1,21 +1,34 @@
 ﻿using UnityEngine;
 
+/** @brief Players shooting script */
 public class PlayerShooting : MonoBehaviour
 {
-    public int damagePerShot = 20;                  // The damage inflicted by each bullet.
-    public float timeBetweenBullets = 0.15f;        // The time between each shot.
-    public float range = 100f;                      // The distance the gun can fire.
-
-    float timer;                                    // A timer to determine when to fire.
-    Ray shootRay;                                   // A ray from the gun end forwards.
-    RaycastHit shootHit;                            // A raycast hit to get information about what was hit.
-    int shootableMask;                              // A layer mask so the raycast only hits things on the shootable layer.
-    LineRenderer gunLine;                           // Reference to the line renderer.
-    AudioSource gunAudio;                           // Reference to the audio source.
-    Light gunLight;                                 // Reference to the light component.
-    float effectsDisplayTime = 0.2f;                // The proportion of the timeBetweenBullets that the effects will display for.
-    ParticleSystem gunParticles;                    // Reference to the particle renderer
+    /** The damage inflicted by each bullet. */
+    public int damagePerShot = 20;                 
+    /** The time between each shot. */
+    public float timeBetweenBullets = 0.15f;       
+    /** The distance the gun can fire. */
+    public float range = 100f;                     
+    /** A timer to determine when to fire. */
+    float timer;                                   
+    /** A ray from the gun end forwards. */
+    Ray shootRay;                                  
+    /** A raycast hit to get information about what was hit. */
+    RaycastHit shootHit;                           
+    /** A layer mask so the raycast only hits things on the shootable layer. */
+    int shootableMask;                             
+    /** Reference to the line renderer. */
+    LineRenderer gunLine;                          
+    /** Reference to the audio source. */
+    AudioSource gunAudio;                          
+    /** Reference to the light component. */
+    Light gunLight;                                
+    /** The proportion of the timeBetweenBullets that the effects will display for. */
+    float effectsDisplayTime = 0.2f;               
+    /** Reference to the particle renderer */
+    ParticleSystem gunParticles;                   
    
+   /** @brief Set up references and create layer mask */
     void Awake ()
     {
         // Create a layer mask for the Shootable layer.
@@ -29,10 +42,9 @@ public class PlayerShooting : MonoBehaviour
         
     }
 
+    /** @brief Update the timer, check if the player wants to shoot  */
     void Update ()
     {
-        
-      
         // Add the time since Update was last called to the timer.
         timer += Time.deltaTime;
 
@@ -40,29 +52,26 @@ public class PlayerShooting : MonoBehaviour
         if(Input.GetButton ("Fire1") && timer >= timeBetweenBullets)
         {
             // ... shoot the gun.
-            Shoot ();
-           
+            Shoot ();      
         }
 
         // If the timer has exceeded the proportion of timeBetweenBullets that the effects should be displayed for...
         if(timer >= timeBetweenBullets * effectsDisplayTime)
         {
             // ... disable the effects.
-            DisableEffects ();
-            
+            DisableEffects ();       
         }
     }
 
+    /** @brief Disable light and particle effects */
     public void DisableEffects ()
     {
         // Disable the line renderer and the light.
         gunLine.enabled = false;
-        gunLight.enabled = false;
- 
-   
-        
+        gunLight.enabled = false; 
     }
 
+    /** @brief Fire the gun */
     public void Shoot ()
     {
        

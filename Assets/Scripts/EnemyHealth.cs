@@ -2,21 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/** @brief Class responsible for handling enemy's health, damage taking and dying  */
 public class EnemyHealth : MonoBehaviour
 {
-    public int startingHealth = 100;            // The amount of health the enemy starts the game with.
-    public int currentHealth;                   // The current health the enemy has.
-    public int scoreValue = 10;                 // The amount added to the player's score when the enemy dies.
+    /** The amount of health the enemy starts the game with. */
+    public int startingHealth = 100;            
+    /** The current health the enemy has. */
+    public int currentHealth;                  
+    /** The amount added to the player's score when the enemy dies. */
+    public int scoreValue = 10;                
+    /** Reference to zombie death audio sound */
     public AudioClip zombieDeath;
-
-    Animator anim;                              // Reference to the animator.
-    CapsuleCollider capsuleCollider;            // Reference to the capsule collider.
-    bool isDead;                                // Whether the enemy is dead.
-    EmemyMovement enemyMovement;                // Reference to enemy movement module
-    ParticleSystem bloodParticles;              // Reference to the particle renderer
-    AudioSource zombieAudio;                    // Reference to the audio source.
+    /** Reference to the animator. */
+    Animator anim;                            
+    /** Reference to the capsule collider. */
+    CapsuleCollider capsuleCollider;           
+    /** Whether the enemy is dead. */
+    bool isDead;
+    /** Reference to enemy movement module */                               
+    EmemyMovement enemyMovement;
+    /** Reference to the particle renderer */                
+    ParticleSystem bloodParticles;  
+    /** Reference to the audio source. */            
+    AudioSource zombieAudio;      
+    /** Reference to navigation mesh agent */           
     UnityEngine.AI.NavMeshAgent nav;   
 
+     /** @brief Setting up the references. */
     void Awake ()
     {
         // Setting up the references.
@@ -38,12 +50,10 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = startingHealth;
     }
 
-    void Update ()
-    {
-      
-    }
-
-
+     /** @brief Take damage 
+     @param amount Amount of damage taken
+     @param hitPoint Direction from which the attack came
+     */
     public void TakeDamage (int amount, Vector3 hitPoint)
     {
         // If the enemy is dead...
@@ -53,7 +63,7 @@ public class EnemyHealth : MonoBehaviour
 
         // Reduce the current health by the amount of damage sustained.
         currentHealth -= amount;
-        //bloodParticles.Shape.rotation = hitPoint;
+        
         var particleShape= bloodParticles.shape;                 // Reference to the shape of particle system
 
 
@@ -73,7 +83,8 @@ public class EnemyHealth : MonoBehaviour
 
     }
 
-
+    /** @brief Play death animation, and disable everything
+     */
     void Death ()
     {
         // The enemy is dead.
